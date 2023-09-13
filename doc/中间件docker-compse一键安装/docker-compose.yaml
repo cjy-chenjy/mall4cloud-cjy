@@ -51,7 +51,7 @@ services:
       - MODE=standalone
       - PREFER_HOST_MODE=hostname
       - SPRING_DATASOURCE_PLATFORM=mysql
-      - MYSQL_SERVICE_HOST=101.42.165.48
+      - MYSQL_SERVICE_HOST=127.0.0.1
       - MYSQL_SERVICE_DB_NAME=mall4cloud_nacos
       - MYSQL_SERVICE_USER=root
       - MYSQL_SERVICE_PASSWORD=root
@@ -70,7 +70,7 @@ services:
       - 8091:8091
       - 7091:7091
     environment:
-      - SEATA_IP=101.42.165.48
+      - SEATA_IP=127.0.0.1
     volumes:
       - ./seata/application.yml:/seata-server/resources/application.yml
 
