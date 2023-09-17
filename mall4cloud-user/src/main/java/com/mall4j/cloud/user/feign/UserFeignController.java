@@ -20,8 +20,6 @@ public class UserFeignController implements UserFeignClient {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private MapperFacade mapperFacade;
 
     @Override
     public ServerResponseEntity<List<UserApiVO>> getUserByUserIds(List<Long> userIds) {

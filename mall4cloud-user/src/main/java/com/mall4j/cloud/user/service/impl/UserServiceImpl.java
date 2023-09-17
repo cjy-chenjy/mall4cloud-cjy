@@ -46,8 +46,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AccountFeignClient accountFeignClient;
     @Autowired
-    private MapperFacade mapperFacade;
-    @Autowired
     private SegmentFeignClient segmentFeignClient;
 
     @Override
