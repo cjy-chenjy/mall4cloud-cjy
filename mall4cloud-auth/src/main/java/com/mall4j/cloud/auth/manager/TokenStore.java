@@ -77,10 +77,12 @@ public class TokenStore {
 		List<String> existsAccessTokens = new ArrayList<>();
 		// 新的token数据
 		existsAccessTokens.add(accessToken + StrUtil.COLON + refreshToken);
-
+		//查询上一次token是否还存在
 		Long size = redisTemplate.opsForSet().size(uidToAccessKeyStr);
 		if (size != null && size != 0) {
+			//不存在，则存储
 			List<String> tokenInfoBoList = stringRedisTemplate.opsForSet().pop(uidToAccessKeyStr, size);
+			//添加成功，返回数据
 			if (tokenInfoBoList != null) {
 				for (String accessTokenWithRefreshToken : tokenInfoBoList) {
 					String[] accessTokenWithRefreshTokenArr = accessTokenWithRefreshToken.split(StrUtil.COLON);
