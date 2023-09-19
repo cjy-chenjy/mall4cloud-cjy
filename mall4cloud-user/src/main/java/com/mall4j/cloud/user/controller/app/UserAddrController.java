@@ -5,6 +5,7 @@ import com.mall4j.cloud.common.order.vo.UserAddrVO;
 import com.mall4j.cloud.common.response.ResponseEnum;
 import com.mall4j.cloud.common.response.ServerResponseEntity;
 import com.mall4j.cloud.common.security.AuthUserContext;
+import com.mall4j.cloud.common.util.BeanUtil;
 import com.mall4j.cloud.user.dto.UserAddrDTO;
 import com.mall4j.cloud.user.model.UserAddr;
 import com.mall4j.cloud.user.service.UserAddrService;
@@ -28,9 +29,6 @@ public class UserAddrController {
 
     @Autowired
     private UserAddrService userAddrService;
-
-    @Autowired
-    private MapperFacade mapperFacade;
 
     private static final Integer MAX_USER_ADDR = 10;
 
@@ -56,7 +54,7 @@ public class UserAddrController {
         if (userAddrCount >= MAX_USER_ADDR) {
             return ServerResponseEntity.showFailMsg("收货地址已达到上限，无法再新增地址");
         }
-        UserAddr userAddr = mapperFacade.map(userAddrDTO, UserAddr.class);
+        UserAddr userAddr = BeanUtil.map(userAddrDTO, UserAddr.class);
         if (userAddrCount == 0) {
             userAddr.setIsDefault(UserAddr.DEFAULT_ADDR);
         } else if (!UserAddr.DEFAULT_ADDR.equals(userAddr.getIsDefault())){
@@ -84,7 +82,7 @@ public class UserAddrController {
         else if (dbUserAddr.getIsDefault().equals(UserAddr.DEFAULT_ADDR) && userAddrDTO.getIsDefault().equals(UserAddr.NOT_DEFAULT_ADDR)) {
             throw new Mall4cloudException(ResponseEnum.DATA_ERROR);
         }
-        UserAddr userAddr = mapperFacade.map(userAddrDTO, UserAddr.class);
+        UserAddr userAddr = BeanUtil.map(userAddrDTO, UserAddr.class);
         userAddr.setUserId(userId);
         userAddrService.update(userAddr);
         // 清除默认地址缓存

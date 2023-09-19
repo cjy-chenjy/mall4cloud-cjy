@@ -2,6 +2,7 @@ package com.mall4j.cloud.user.controller.multishop;
 
 import com.mall4j.cloud.api.user.vo.UserApiVO;
 import com.mall4j.cloud.common.database.vo.PageVO;
+import com.mall4j.cloud.common.util.BeanUtil;
 import com.mall4j.cloud.user.model.User;
 import com.mall4j.cloud.user.service.UserService;
 import com.mall4j.cloud.user.dto.UserDTO;
@@ -28,9 +29,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-	private MapperFacade mapperFacade;
-
 	@GetMapping("/page")
 	@Operation(summary = "获取用户表列表" , description = "分页获取用户表列表")
 	public ServerResponseEntity<PageVO<UserApiVO>> page(@Valid PageDTO pageDTO) {
@@ -41,7 +39,7 @@ public class UserController {
 	@GetMapping
     @Operation(summary = "获取用户表" , description = "根据userId获取用户表")
     public ServerResponseEntity<UserApiVO> getByUserId(@RequestParam Long userId) {
-        UserApiVO userVO = mapperFacade.map(userService.getByUserId(userId), UserApiVO.class);
+        UserApiVO userVO = BeanUtil.map(userService.getByUserId(userId), UserApiVO.class);
         return ServerResponseEntity.success(userVO);
     }
 
@@ -49,7 +47,7 @@ public class UserController {
     @PutMapping
     @Operation(summary = "更新用户表" , description = "更新用户表")
     public ServerResponseEntity<Void> update(@Valid @RequestBody UserDTO userDTO) {
-        User user = mapperFacade.map(userDTO, User.class);
+        User user = BeanUtil.map(userDTO, User.class);
         userService.update(user);
         return ServerResponseEntity.success();
     }
