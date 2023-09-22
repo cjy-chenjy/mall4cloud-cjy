@@ -120,13 +120,14 @@ public class AuthFilter implements Filter {
 	}
 
 	private boolean feignRequestCheck(HttpServletRequest req) {
-		// 不是feign请求，不用校验
+		// 不是feign请求，返回true
 		if (!req.getRequestURI().startsWith(FeignInsideAuthConfig.FEIGN_INSIDE_URL_PREFIX)) {
 			return true;
 		}
+		//获取fegin的value密钥，这个在nacos中已配置
 		String feignInsideSecret = req.getHeader(feignInsideAuthConfig.getKey());
 
-		// 校验feign 请求携带的key 和 value是否正确
+		// 校验feign 请求携带的key 和 value是否正确，不正确返回false
 		if (StrUtil.isBlank(feignInsideSecret) || !Objects.equals(feignInsideSecret,feignInsideAuthConfig.getSecret())) {
 			return false;
 		}
@@ -134,7 +135,7 @@ public class AuthFilter implements Filter {
 		List<String> ips = feignInsideAuthConfig.getIps();
 		// 移除无用的空ip
 		ips.removeIf(StrUtil::isBlank);
-		// 有ip白名单，且ip不在白名单内，校验失败
+		// 有ip白名单，且ip不在白名单内，校验失败。不为空或者获取当前用户真实ip不在白名单中，返回false
 		if (CollectionUtil.isNotEmpty(ips)
 				&& !ips.contains(IpHelper.getIpAddr())) {
 			logger.error("ip not in ip White list: {}, ip, {}", ips, IpHelper.getIpAddr());
