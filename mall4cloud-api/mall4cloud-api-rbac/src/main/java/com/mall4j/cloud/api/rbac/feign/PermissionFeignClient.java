@@ -22,11 +22,11 @@ public interface PermissionFeignClient {
 
 	/**
 	 * 校验是否有某个uri的权限
-	 * @param userId
-	 * @param sysType
-	 * @param uri
-	 * @param isAdmin
-	 * @param method
+	 * @param userId 用户id
+	 * @param sysType 用户类型
+	 * @param uri 访问的uri
+	 * @param isAdmin 是否为admin用户
+	 * @param method 方法枚举值
 	 * @return 是否有某个uri的权限
 	 */
 	@GetMapping(value = Auth.CHECK_RBAC_URI)

@@ -121,8 +121,9 @@ public class MenuPermissionServiceImpl implements MenuPermissionService {
 	}
 
 	/**
-	 * 获取某个类型用户的所有权限列表（有缓存）
+	 * 获取某个用户的所有权限列表（有缓存）
 	 * @param sysType 系统类型
+	 * @param userId 用户id
 	 * @return 权限列表
 	 */
 	@Cacheable(cacheNames = CacheNames.USER_PERMISSIONS_KEY, key = "#sysType + ':' + #userId")
