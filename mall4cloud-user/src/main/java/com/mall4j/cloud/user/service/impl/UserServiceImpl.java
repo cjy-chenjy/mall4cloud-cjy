@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @GlobalTransactional(rollbackFor = Exception.class)
+    //@GlobalTransactional(rollbackFor = Exception.class)
     @Transactional(rollbackFor = Exception.class)
     public Long save(UserRegisterDTO param) {
         this.checkRegisterInfo(param);

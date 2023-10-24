@@ -46,7 +46,7 @@ public class UserRegisterController {
         UserInfoInTokenBO userInfoInTokenBO = new UserInfoInTokenBO();
         userInfoInTokenBO.setUid(uid);
         userInfoInTokenBO.setUserId(param.getUserId());
-        userInfoInTokenBO.setSysType(SysTypeEnum.ORDINARY.value());
+        userInfoInTokenBO.setSysType(SysTypeEnum.MULTISHOP.value());
         userInfoInTokenBO.setIsAdmin(0);
         return accountFeignClient.storeTokenAndGetVo(userInfoInTokenBO);
     }
