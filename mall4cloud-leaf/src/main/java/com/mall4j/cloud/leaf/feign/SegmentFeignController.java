@@ -30,6 +30,7 @@ public class SegmentFeignController implements SegmentFeignClient {
 
 	@Override
 	public ServerResponseEntity<Long> getSegmentId(String key) {
+		//通过不同服务的key获取分布式id
 		return ServerResponseEntity.success(get(key, segmentService.getId(key)));
 	}
 

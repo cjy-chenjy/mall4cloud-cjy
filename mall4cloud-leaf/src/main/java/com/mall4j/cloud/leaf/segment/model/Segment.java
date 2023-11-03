@@ -7,15 +7,15 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Segment {
 
-	private AtomicLong value = new AtomicLong(0);
+	private AtomicLong value = new AtomicLong(0); //对 long 类型的变量进行原子操作，这里就是产生的id值
 
-	private volatile long max;
+	private volatile long max; //当前号段起始id
 
-	private volatile int step;
+	private volatile int step;  //每次缓存数量
 
-	private volatile int randomStep;
+	private volatile int randomStep; //随机增长
 
-	private final SegmentBuffer buffer;
+	private final SegmentBuffer buffer; //双buffer
 
 	public Segment(SegmentBuffer buffer) {
 		this.buffer = buffer;

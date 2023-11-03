@@ -81,6 +81,7 @@ public class SegmentIDGenImpl implements IDGen {
 		// 确保加载到kv后才初始化成功
 		updateCacheFromDb();
 		initOk = true;
+		//60s的定时更新号段
 		updateCacheFromDbAtEveryMinute();
 		return initOk;
 	}
