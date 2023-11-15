@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     //@GlobalTransactional(rollbackFor = Exception.class)
     @Transactional(rollbackFor = Exception.class)
     public Long save(UserRegisterDTO param) {
-        this.checkRegisterInfo(param);
+        checkRegisterInfo(param);
 
         ServerResponseEntity<Long> segmentIdResponse = segmentFeignClient.getSegmentId(User.DISTRIBUTED_ID_KEY);
         if (!segmentIdResponse.isSuccess()) {

@@ -50,6 +50,7 @@ public class SegmentBuffer {
 
 	public SegmentBuffer() {
 		segments = new Segment[] { new Segment(this), new Segment(this) };
+		//buffer的指向标志
 		currentPos = 0;
 		nextReady = false;
 		initOk = false;

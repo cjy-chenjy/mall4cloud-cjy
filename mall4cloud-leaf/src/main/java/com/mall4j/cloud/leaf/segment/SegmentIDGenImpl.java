@@ -121,18 +121,22 @@ public class SegmentIDGenImpl implements IDGen {
 			for (String tag : insertTagsSet) {
 				SegmentBuffer buffer = new SegmentBuffer();
 				buffer.setKey(tag);
+				//取当前位置的Segment，第一次取第一个位置的
 				Segment segment = buffer.getCurrent();
+				//初始化为0
 				segment.setValue(new AtomicLong(0));
 				segment.setMax(0);
 				segment.setStep(0);
+				//缓存
 				cache.put(tag, buffer);
 				logger.info("Add tag {} from db to IdCache, SegmentBuffer {}", tag, buffer);
 			}
-			// cache中已失效的tags从cache删除
+			//遍历数据库中的tags，如果数据库中的存在，removeTagsSet就不保存
 			for (int i = 0; i < dbTags.size(); i++) {
 				String tmp = dbTags.get(i);
 				removeTagsSet.remove(tmp);
 			}
+			// cache中已失效的tags从cache删除
 			for (String tag : removeTagsSet) {
 				cache.remove(tag);
 				logger.info("Remove tag {} from IdCache", tag);
@@ -227,6 +231,7 @@ public class SegmentIDGenImpl implements IDGen {
 			buffer.rLock().lock();
 			try {
 				final Segment segment = buffer.getCurrent();
+				//当号段下发了10%，如果下一个号段未更新或者更新号段线程未执行，通过一个新线程去更新
 				if (!buffer.isNextReady() && (segment.getIdle() < 0.9 * segment.getStep())
 						&& buffer.getThreadRunning().compareAndSet(false, true)) {
 					service.execute(new Runnable() {
