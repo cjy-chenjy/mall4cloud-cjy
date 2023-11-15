@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class SegmentBuffer {
 
-	private String key;
+	private String key;  //对应了数据库中的biz_tag
 
 	/**
 	 * 双buffer
